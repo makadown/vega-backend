@@ -1,0 +1,14 @@
+C:\wsDotNet\vega-backend\bin\Debug\netcoreapp2.1\vega-backend.deps.json
+C:\wsDotNet\vega-backend\bin\Debug\netcoreapp2.1\vega-backend.runtimeconfig.json
+C:\wsDotNet\vega-backend\bin\Debug\netcoreapp2.1\vega-backend.runtimeconfig.dev.json
+C:\wsDotNet\vega-backend\bin\Debug\netcoreapp2.1\vega-backend.dll
+C:\wsDotNet\vega-backend\bin\Debug\netcoreapp2.1\vega-backend.pdb
+C:\wsDotNet\vega-backend\obj\Debug\netcoreapp2.1\vega-backend.csprojAssemblyReference.cache
+C:\wsDotNet\vega-backend\obj\Debug\netcoreapp2.1\vega-backend.csproj.CoreCompileInputs.cache
+C:\wsDotNet\vega-backend\obj\Debug\netcoreapp2.1\vega-backend.RazorAssemblyInfo.cache
+C:\wsDotNet\vega-backend\obj\Debug\netcoreapp2.1\vega-backend.RazorAssemblyInfo.cs
+C:\wsDotNet\vega-backend\obj\Debug\netcoreapp2.1\vega-backend.AssemblyInfoInputs.cache
+C:\wsDotNet\vega-backend\obj\Debug\netcoreapp2.1\vega-backend.AssemblyInfo.cs
+C:\wsDotNet\vega-backend\obj\Debug\netcoreapp2.1\vega-backend.RazorTargetAssemblyInfo.cache
+C:\wsDotNet\vega-backend\obj\Debug\netcoreapp2.1\vega-backend.dll
+C:\wsDotNet\vega-backend\obj\Debug\netcoreapp2.1\vega-backend.pdb
