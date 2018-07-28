@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using vega_backend.Models;
 
 namespace vega_backend.Persistence
 {
@@ -8,5 +9,8 @@ namespace vega_backend.Persistence
         {
             // System.Configuration.ConfigurationManager
         }
+
+/*El meter al menos un DbSet aquí hace que se agregue / actualice la migracion */
+        public DbSet<Make> Makes { get; set; }
     }
 }
