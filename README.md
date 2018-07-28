@@ -7,6 +7,8 @@ Guia de creación de backend desde cero gracias a https://docs.microsoft.com/en-
  y 
 https://developer.okta.com/blog/2018/04/26/build-crud-app-aspnetcore-angular#configure-the-database-connection-on-startup
 
+Este proyecto trabaja con Base de Datos en SQL Server. Por lo que si se usa, se tiene que tener instalado.
+
 # Paquetes instalados
 
 > dotnet add package Microsoft.EntityFrameworkCore.SqlServer
@@ -16,3 +18,15 @@ https://developer.okta.com/blog/2018/04/26/build-crud-app-aspnetcore-angular#con
 > dotnet ef migrations add modelName
 
 > dotnet ef database update
+
+
+Si quiero eliminar de mi BD mi unico estado de mi unica migracion que tengo (si solo tengo 1):
+
+> dotnet ef database update 0
+
+para despues 
+
+> dotnet ef migrations remove
+
+OJO: no es recomendable estar removeando cuando se tienen varias migraciones.
+

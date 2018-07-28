@@ -9,8 +9,8 @@ using vega_backend.Persistence;
 namespace vegabackend.Migrations
 {
     [DbContext(typeof(VegaDbContext))]
-    [Migration("20180728140710_initialModel")]
-    partial class initialModel
+    [Migration("20180728144635_initialModelWithConstraints")]
+    partial class initialModelWithConstraints
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,7 +26,9 @@ namespace vegabackend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255);
 
                     b.HasKey("Id");
 
@@ -41,13 +43,15 @@ namespace vegabackend.Migrations
 
                     b.Property<int>("MakeId");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255);
 
                     b.HasKey("Id");
 
                     b.HasIndex("MakeId");
 
-                    b.ToTable("Model");
+                    b.ToTable("Models");
                 });
 
             modelBuilder.Entity("vega_backend.Models.Model", b =>
