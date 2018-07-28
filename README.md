@@ -15,9 +15,14 @@ Este proyecto trabaja con Base de Datos en SQL Server. Por lo que si se usa, se 
 
 # Agregar migraciones en consola
 
+Para iniciar mi desarrollo code-first o si quiero iniciar siembra (seed) de datos en mi db:
+
 > dotnet ef migrations add modelName
 
 > dotnet ef database update
+
+
+el comando `database update` actualizara la base de datos de acuerdo con hasta la ultima migración.
 
 
 Si quiero eliminar de mi BD mi unico estado de mi unica migracion que tengo (si solo tengo 1):
@@ -29,4 +34,10 @@ para despues
 > dotnet ef migrations remove
 
 OJO: no es recomendable estar removeando cuando se tienen varias migraciones.
+
+
+Para inicializar una BD Vacía desde una migracion de este proyecto (Ver nombre de clase en folder /Migrations)
+
+> dotnet ef database update `nombreDeMigracion`
+
 
