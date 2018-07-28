@@ -62,8 +62,24 @@ Lo que está en folder `Models` se utiliza unicamente como ORM para la BD. NO pa
 ej. 
 http://localhost:5000/api/makes
 
-| API          | Descripción       | Request Body | Response Body            |
-|--------------|-------------------|--------------|------------------------- |
-| `/api/makes` | Obtiene todos los |     None     | Collección de makes con  |
-|              | makes             |              | su detalle de models     |
-|              |                   |              |                          |
+|      API          | Descripción             | Request Body |             Response Body                  |
+|-------------------|-------------------------|--------------|------------------------------------------- |
+|  `/api/makes`     | Obtiene todos los makes |     None     | Colección de makes con detalle de models   |
+|  `/api/models`    | Obtiene todos los models|     None     | Colección de models                        |
+|  `/api/features`  | Obtiene características |     None     | Colección de features (características)    |
+|                   |                         |              |                                            |
+|                   |                         |              |                                            |
+|                   |                         |              |                                            |
+
+
+
+
+
+
+
+
+
+
+
+
+
