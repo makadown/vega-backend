@@ -9,9 +9,18 @@ https://developer.okta.com/blog/2018/04/26/build-crud-app-aspnetcore-angular#con
 
 Este proyecto trabaja con Base de Datos en SQL Server. Por lo que si se usa, se tiene que tener instalado.
 
+
+
 ## Paquetes instalados
 
 > dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+
+> dotnet add package AutoMapper
+
+> dotnet add package AutoMapper.Extensions.Microsoft.DependencyInjection
+
+> dotnet restore          (Sólo si el VS Code se ofreció a -y no aceptaste- restaurar)
+
 
 ## Agregar migraciones en consola
 
@@ -41,6 +50,20 @@ Para inicializar una BD Vacía desde una migracion de este proyecto (Ver nombre 
 > dotnet ef database update `nombreDeMigracion`
 
 
+
 ## Cotorreo en uso de modelos
 
-Lo que está en folder `Models` se utiliza unicamente como ORM para la BD. NO para usarse al consumir APIS. Para consumir APIS, se usan las clases contenidas en `Controllers\Resources`.
+Lo que está en folder `Models` se utiliza unicamente como ORM para la BD. NO para usarse al consumir APIS. Para consumir APIS, se usan las clases contenidas en `Controllers\Resources`.  
+
+
+## APIs creadas
+
+(gracias a https://www.tablesgenerator.com/markdown_tables )
+ej. 
+http://localhost:5000/api/makes
+
+| API          | Descripción       | Request Body | Response Body            |
+|--------------|-------------------|--------------|------------------------- |
+| `/api/makes` | Obtiene todos los |     None     | Collección de makes con  |
+|              | makes             |              | su detalle de models     |
+|              |                   |              |                          |

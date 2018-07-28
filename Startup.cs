@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using vega_backend.Persistence;
+using AutoMapper;
 
 namespace vega_backend
 {
@@ -27,6 +28,18 @@ namespace vega_backend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+          
+           services.AddAutoMapper();         
+          
+            /*
+            Esto es para usar las apis con los Models y evitar el error de 
+            Reference Loop 
+             */
+             services.AddMvc().AddJsonOptions(
+                      options => 
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+              );
+
             /* Tomado de 
 https://developer.okta.com/blog/2018/04/26/build-crud-app-aspnetcore-angular#configure-the-database-connection-on-startup
              */
@@ -47,7 +60,10 @@ https://developer.okta.com/blog/2018/04/26/build-crud-app-aspnetcore-angular#con
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+            /* Me caga el Https Redirection */
+            // app.UseHttpsRedirection();
             app.UseMvc();
         }
     }
