@@ -9,11 +9,11 @@ https://developer.okta.com/blog/2018/04/26/build-crud-app-aspnetcore-angular#con
 
 Este proyecto trabaja con Base de Datos en SQL Server. Por lo que si se usa, se tiene que tener instalado.
 
-# Paquetes instalados
+## Paquetes instalados
 
 > dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 
-# Agregar migraciones en consola
+## Agregar migraciones en consola
 
 Para iniciar mi desarrollo code-first o si quiero iniciar siembra (seed) de datos en mi db:
 
@@ -41,3 +41,6 @@ Para inicializar una BD Vacía desde una migracion de este proyecto (Ver nombre 
 > dotnet ef database update `nombreDeMigracion`
 
 
+## Cotorreo en uso de modelos
+
+Lo que está en folder `Models` se utiliza unicamente como ORM para la BD. NO para usarse al consumir APIS. Para consumir APIS, se usan las clases contenidas en `Controllers\Resources`.
