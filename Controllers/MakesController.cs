@@ -19,9 +19,12 @@ namespace vega_backend.Controllers
         }
 
         [HttpGet("/api/makes")]
-        public async Task<IEnumerable<Make>> GetMakes() {
-            // El include hace que se populen los modelos para cada Make
+        public async Task<IEnumerable<Make>> GetMakes() {            
+            /* El operador await suspende el metodo GetMakes() hasta que se complete
+               el metodo invocado por _context.Makes.Include( m => m.Models ).ToListAsync() */
             return await this._context.Makes.Include( m => m.Models ).ToListAsync();
+            
+            /* El include hace que se populen los modelos para cada Make */
         }
 
     }
