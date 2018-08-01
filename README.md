@@ -9,7 +9,15 @@ https://developer.okta.com/blog/2018/04/26/build-crud-app-aspnetcore-angular#con
 
 Este proyecto trabaja con Base de Datos en SQL Server. Por lo que si se usa, se tiene que tener instalado.
 
+- Descargar e instalar apnetcore :
+> https://www.microsoft.com/net/learn/get-started/windows
 
+En caso de no tenerlo, crear la variable de entorno:
+> SET ASPNETCORE_Environment=Development
+
+## Creacion desde scratch
+
+> dotnet new webapi -o vega-backend
 
 ## Paquetes instalados
 
@@ -49,6 +57,11 @@ Para inicializar una BD Vacía desde una migracion de este proyecto (Ver nombre 
 
 > dotnet ef database update `nombreDeMigracion`
 
+## Inicio de ejecucion de backend
+
+Presionar F5 o teclear:
+
+> dotnet run
 
 
 ## Cotorreo en uso de modelos
