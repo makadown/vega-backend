@@ -28,7 +28,10 @@ namespace vega_backend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-          
+            /* Importante para evitar errores 
+               "No 'Access-Control-Allow-Origin' header is present on the requested resource"
+               en el front */
+           services.AddCors();
            services.AddAutoMapper();         
           
             /*
