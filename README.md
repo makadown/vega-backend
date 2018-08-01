@@ -21,6 +21,8 @@ En caso de no tenerlo, crear la variable de entorno:
 
 ## Paquetes instalados
 
+> dotnet add package Microsoft.AspNetCore.Cors
+
 > dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 
 > dotnet add package AutoMapper
