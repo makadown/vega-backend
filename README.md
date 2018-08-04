@@ -68,7 +68,7 @@ Presionar F5 o teclear:
 
 ## Cotorreo en uso de modelos
 
-Lo que está en folder `Models` se utiliza unicamente como ORM para la BD. NO para usarse al consumir APIS. Para consumir APIS, se usan las clases contenidas en `Controllers\Resources`.  
+Lo que está en folder `Models` se utiliza unicamente para la ORMeada de BD. NO para usarse al consumir APIS. Para consumir APIS, se usan las clases contenidas en `Controllers\Resources`.  
 
 
 ## APIs creadas
