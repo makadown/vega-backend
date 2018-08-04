@@ -8,9 +8,7 @@ namespace vega_backend.Controllers.Resources
 {
     public class VehicleResource
     {
-
-
-         public int Id { get; set; }
+        public int Id { get; set; }
         public int ModelId { get; set; }
        
         
