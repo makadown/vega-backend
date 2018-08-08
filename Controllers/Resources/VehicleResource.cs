@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using vega_backend.Models;
 
@@ -14,6 +15,7 @@ namespace vega_backend.Controllers.Resources
         
         public bool IsRegistered { get; set; }
 
+        [Required]
         public ContactResource Contact { get; set; }      
 
         public ICollection<int> Features { get; set; }

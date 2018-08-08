@@ -4,6 +4,7 @@ using vega_backend.Controllers.Resources;
 using vega_backend.Models;
 using AutoMapper;
 using vega_backend.Persistence;
+using System;
 
 namespace vega_backend.Controllers
 {
@@ -23,9 +24,32 @@ namespace vega_backend.Controllers
 
         [HttpPost]
         public async Task<IActionResult> CreateVehicle([FromBody] VehicleResource vehicleResource){
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            /* Esta validacion es a modo de ejercicio. PEro normalmente, como todo se invocaria desde
+               el ambiente controlado de un frontend no se necesita. */
+            var model = await context.Models.FindAsync(vehicleResource.ModelId);
+            if (model == null) {
+                ModelState.AddModelError("ModelId", "Invalid ModelId");
+                return BadRequest(ModelState);
+            }
+            if ( vehicleResource.Features != null )
+            {
+                foreach (var featureId in vehicleResource.Features)
+                {
+                      var feat  = await context.Features.FindAsync(featureId);
+                      if (feat == null) {
+                            ModelState.AddModelError("FeaturelId", errorMessage: "Invalid FeatureId");
+                            return BadRequest(ModelState);
+                        }
+                }
+            }
+
             var vehicle = mapper.Map<VehicleResource, Vehicle>(vehicleResource);
             vehicle.LastUpdate = DateTime.Now;
-            
+
             context.Vehicles.Add(vehicle);
             await context.SaveChangesAsync();
 

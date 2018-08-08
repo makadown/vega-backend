@@ -10,6 +10,7 @@ namespace vega_backend.Persistence
         public DbSet<Make> Makes { get; set; }
         public DbSet<Feature> Features {get; set;}
         public DbSet<Vehicle> Vehicles { get; set; }
+        public DbSet<Model> Models { get; set;}
         
         public VegaDbContext( DbContextOptions<VegaDbContext> options) : base( options )
         {
