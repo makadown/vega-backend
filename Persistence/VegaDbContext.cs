@@ -9,6 +9,8 @@ namespace vega_backend.Persistence
 /*El meter al menos un DbSet aquí hace que se agregue / actualice la migracion */
         public DbSet<Make> Makes { get; set; }
         public DbSet<Feature> Features {get; set;}
+        public DbSet<Vehicle> Vehicles { get; set; }
+        
         public VegaDbContext( DbContextOptions<VegaDbContext> options) : base( options )
         {
             // System.Configuration.ConfigurationManager

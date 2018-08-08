@@ -11,19 +11,31 @@ namespace vega_backend.Controllers
     public class VehiclesController : Controller
     {
         
-        private readonly VegaDbContext _context;
+        private readonly VegaDbContext context;
         private readonly IMapper mapper;
+
         public VehiclesController(VegaDbContext context, IMapper mapper)
         {
             this.mapper = mapper;
-            this._context = context;
+            this.context = context;
 
         }       
 
         [HttpPost]
-        public IActionResult CreateVehicle([FromBody] VehicleResource vehicleResource){
+        public async Task<IActionResult> CreateVehicle([FromBody] VehicleResource vehicleResource){
             var vehicle = mapper.Map<VehicleResource, Vehicle>(vehicleResource);
-            return Ok(vehicle);
+            vehicle.LastUpdate = DateTime.Now;
+            
+            context.Vehicles.Add(vehicle);
+            await context.SaveChangesAsync();
+
+            /* Para devolver el vehicleResource en lugar del vehicle,  
+               Además, si intento regresar el puro vehicle, obtendré error de
+               cochinero circular.
+            */
+            var result = mapper.Map<Vehicle, VehicleResource>(vehicle);
+
+            return Ok(result);
         }
     }
 }
