@@ -71,6 +71,11 @@ namespace vega_backend.Controllers
             
             // busco vehiculo en la BD
             var vehicle = await context.Vehicles.Include(v=>v.Features).SingleOrDefaultAsync( v=> v.Id == id );
+             if (vehicle == null) 
+            {
+                return NotFound();
+            }
+            
             // mapeo el vehiculo con el vehicleReource. Se respeta el id de vehicle
             mapper.Map<VehicleResource, Vehicle>(vehicleResource, vehicle);
 
@@ -80,6 +85,21 @@ namespace vega_backend.Controllers
             var result = mapper.Map<Vehicle, VehicleResource>(vehicle);
 
             return Ok(result);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteVehicle(int id) {
+            var vehicle = await context.Vehicles.FindAsync(id);
+
+            if (vehicle == null) 
+            {
+                return NotFound();
+            }
+
+            context.Remove(vehicle);
+            await context.SaveChangesAsync();
+
+            return Ok(id);
         }
     }
 }
