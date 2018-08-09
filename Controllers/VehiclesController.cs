@@ -75,7 +75,7 @@ namespace vega_backend.Controllers
             {
                 return NotFound();
             }
-            
+
             // mapeo el vehiculo con el vehicleReource. Se respeta el id de vehicle
             mapper.Map<VehicleResource, Vehicle>(vehicleResource, vehicle);
 
@@ -100,6 +100,20 @@ namespace vega_backend.Controllers
             await context.SaveChangesAsync();
 
             return Ok(id);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetVehicle(int id) {
+            var vehicle = await context.Vehicles.Include(v => v.Features).SingleOrDefaultAsync( v => v.Id == id);
+
+            if (vehicle == null) 
+            {
+                return NotFound();
+            }
+
+            var vehicleResource = mapper.Map<Vehicle, VehicleResource>(vehicle);
+
+            return Ok(vehicleResource);
         }
     }
 }
