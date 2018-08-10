@@ -54,11 +54,17 @@ namespace vega_backend.Controllers
             context.Vehicles.Add(vehicle);
             await context.SaveChangesAsync();
 
-            /* Para devolver el vehicleResource en lugar del vehicle,  
+            vehicle = await context.Vehicles
+                    .Include(v => v.Features)
+                        .ThenInclude(vf => vf.Feature)
+                    .Include(v => v.Model)
+                        .ThenInclude( m => m.Make )
+                    .SingleOrDefaultAsync( v => v.Id == vehicle.Id);
+            /* Para devolver el vehicleResource en lugar del vehicle (o del SaveVehicleResource),  
                Además, si intento regresar el puro vehicle, obtendré error de
                cochinero circular.
             */
-            var result = mapper.Map<Vehicle, SaveVehicleResource>(vehicle);
+            var result = mapper.Map<Vehicle, VehicleResource>(vehicle);
 
             return Ok(result);
         }
@@ -70,7 +76,13 @@ namespace vega_backend.Controllers
                 return BadRequest(ModelState); 
             
             // busco vehiculo en la BD
-            var vehicle = await context.Vehicles.Include(v=>v.Features).SingleOrDefaultAsync( v=> v.Id == id );
+            var vehicle = await context.Vehicles
+                    .Include(v => v.Features)
+                        .ThenInclude(vf => vf.Feature)
+                    .Include(v => v.Model)
+                        .ThenInclude( m => m.Make )
+                    .SingleOrDefaultAsync( v => v.Id == id);
+
              if (vehicle == null) 
             {
                 return NotFound();
@@ -82,7 +94,8 @@ namespace vega_backend.Controllers
             vehicle.LastUpdate = DateTime.Now;
 
             await context.SaveChangesAsync();
-            var result = mapper.Map<Vehicle, SaveVehicleResource>(vehicle);
+            // mapeo ahora con VehicleResource (no con SaveVehicleResource) para devolver detalle
+            var result = mapper.Map<Vehicle, VehicleResource>(vehicle);
 
             return Ok(result);
         }
