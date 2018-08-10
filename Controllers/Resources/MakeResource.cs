@@ -9,16 +9,13 @@ namespace vega_backend.Controllers.Resources
     * Se utiliza junto con todo en Resources para ser utilizado
     * al consumir APIs
     */
-    public class MakeResource
+    public class MakeResource : KeyValuePairResource
     {
-        public int Id { get; set; }       
-        public string Name { get; set; }
-
-        public ICollection<ModelResource> Models { get; set; }
+        public ICollection<KeyValuePairResource> Models { get; set; }
 
         public MakeResource()
         {
-            Models = new Collection<ModelResource>();
+            Models = new Collection<KeyValuePairResource>();
         }
     }
 }
