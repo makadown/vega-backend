@@ -24,21 +24,21 @@ namespace vega_backend.Controllers
         }       
 
         [HttpPost]
-        public async Task<IActionResult> CreateVehicle([FromBody] VehicleResource vehicleResource){
+        public async Task<IActionResult> CreateVehicle([FromBody] SaveVehicleResource savevehicleResource){
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             /* Esta validacion es a modo de ejercicio. PEro normalmente, como todo se invocaria desde
                el ambiente controlado de un frontend no se necesita. */
-            var model = await context.Models.FindAsync(vehicleResource.ModelId);
+            var model = await context.Models.FindAsync(savevehicleResource.ModelId);
             if (model == null) {
                 ModelState.AddModelError("ModelId", "Invalid ModelId");
                 return BadRequest(ModelState);
             }
-            if ( vehicleResource.Features != null )
+            if ( savevehicleResource.Features != null )
             {
-                foreach (var featureId in vehicleResource.Features)
+                foreach (var featureId in savevehicleResource.Features)
                 {
                       var feat  = await context.Features.FindAsync(featureId);
                       if (feat == null) {
@@ -48,7 +48,7 @@ namespace vega_backend.Controllers
                 }
             }
 
-            var vehicle = mapper.Map<VehicleResource, Vehicle>(vehicleResource);
+            var vehicle = mapper.Map<SaveVehicleResource, Vehicle>(savevehicleResource);
             vehicle.LastUpdate = DateTime.Now;
 
             context.Vehicles.Add(vehicle);
@@ -58,13 +58,13 @@ namespace vega_backend.Controllers
                Además, si intento regresar el puro vehicle, obtendré error de
                cochinero circular.
             */
-            var result = mapper.Map<Vehicle, VehicleResource>(vehicle);
+            var result = mapper.Map<Vehicle, SaveVehicleResource>(vehicle);
 
             return Ok(result);
         }
 
         [HttpPut("{id}")] //   /api/vehicles/{id}
-        public async Task<IActionResult> UpdateVehicle(int id, [FromBody] VehicleResource vehicleResource){
+        public async Task<IActionResult> UpdateVehicle(int id, [FromBody] SaveVehicleResource savevehicleResource){
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState); 
@@ -77,12 +77,12 @@ namespace vega_backend.Controllers
             }
 
             // mapeo el vehiculo con el vehicleReource. Se respeta el id de vehicle
-            mapper.Map<VehicleResource, Vehicle>(vehicleResource, vehicle);
+            mapper.Map<SaveVehicleResource, Vehicle>(savevehicleResource, vehicle);
 
             vehicle.LastUpdate = DateTime.Now;
 
             await context.SaveChangesAsync();
-            var result = mapper.Map<Vehicle, VehicleResource>(vehicle);
+            var result = mapper.Map<Vehicle, SaveVehicleResource>(vehicle);
 
             return Ok(result);
         }
@@ -104,7 +104,12 @@ namespace vega_backend.Controllers
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetVehicle(int id) {
-            var vehicle = await context.Vehicles.Include(v => v.Features).SingleOrDefaultAsync( v => v.Id == id);
+            var vehicle = await context.Vehicles
+                    .Include(v => v.Features)
+                        .ThenInclude(vf => vf.Feature)
+                    .Include(v => v.Model)
+                        .ThenInclude( m => m.Make )
+                    .SingleOrDefaultAsync( v => v.Id == id);
 
             if (vehicle == null) 
             {
