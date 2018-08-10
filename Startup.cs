@@ -32,7 +32,8 @@ namespace vega_backend
                "No 'Access-Control-Allow-Origin' header is present on the requested resource"
                en el front */
            services.AddCors();
-           services.AddAutoMapper();         
+           services.AddAutoMapper();
+           services.AddScoped<IVehicleRepository, VehicleRepository>();
           
             /*
             Esto es para usar las apis con los Models y evitar el error de 
