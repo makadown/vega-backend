@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using vega_backend.Models;
+using vega_backend.Core;
+using vega_backend.Core.Models;
 
 namespace vega_backend.Persistence
 {

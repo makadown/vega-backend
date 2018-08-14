@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using vega_backend.Models;
+using vega_backend.Core.Models;
 using vega_backend.Persistence;
 using AutoMapper;
 using vega_backend.Controllers.Resources;

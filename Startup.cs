@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using vega_backend.Persistence;
 using AutoMapper;
+using vega_backend.Core;
 
 namespace vega_backend
 {

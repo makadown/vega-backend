@@ -1,11 +1,11 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using vega_backend.Controllers.Resources;
-using vega_backend.Models;
 using AutoMapper;
-using vega_backend.Persistence;
 using System;
 using Microsoft.EntityFrameworkCore;
+using vega_backend.Core;
+using vega_backend.Core.Models;
+using vega_backend.Controllers.Resources;
 
 namespace vega_backend.Controllers
 {
@@ -64,6 +64,9 @@ namespace vega_backend.Controllers
             vehicle.LastUpdate = DateTime.Now;
 
             await this.unitOfWork.CompleteAsync();
+
+            // Vuelvo a obtener pa amarrar bien y evitar un bug
+            vehicle = await repository.GetVehicle(vehicle.Id);
             // mapeo ahora con VehicleResource (no con SaveVehicleResource) para devolver detalle
             var result = mapper.Map<Vehicle, VehicleResource>(vehicle);
 
