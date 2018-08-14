@@ -11,57 +11,34 @@ namespace vega_backend.Controllers
 {
     [Route("/api/vehicles")]
     public class VehiclesController : Controller
-    {
-        
-        private readonly VegaDbContext context;
+    { 
         private readonly IMapper mapper;
         private readonly IVehicleRepository repository;
+        private readonly IUnitOfWork unitOfWork;
 
-        public VehiclesController(VegaDbContext context, 
-                IMapper mapper, IVehicleRepository repository)
+        public VehiclesController( IMapper mapper, IVehicleRepository repository, 
+                                   IUnitOfWork unitOfWork)
         {
             this.mapper = mapper;
             this.repository = repository;
-            this.context = context;
+            this.unitOfWork = unitOfWork;
 
         }       
 
         [HttpPost]
-        public async Task<IActionResult> CreateVehicle([FromBody] SaveVehicleResource savevehicleResource){
+        public async Task<IActionResult> CreateVehicle([FromBody] SaveVehicleResource vehicleResource){
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            /* Esta validacion es a modo de ejercicio. PEro normalmente, como todo se invocaria desde
-               el ambiente controlado de un frontend no se necesita. */
-            var model = await context.Models.FindAsync(savevehicleResource.ModelId);
-            if (model == null) {
-                ModelState.AddModelError("ModelId", "Invalid ModelId");
-                return BadRequest(ModelState);
-            }
-            if ( savevehicleResource.Features != null )
-            {
-                foreach (var featureId in savevehicleResource.Features)
-                {
-                      var feat  = await context.Features.FindAsync(featureId);
-                      if (feat == null) {
-                            ModelState.AddModelError("FeaturelId", errorMessage: "Invalid FeatureId");
-                            return BadRequest(ModelState);
-                        }
-                }
-            }
-
-            var vehicle = mapper.Map<SaveVehicleResource, Vehicle>(savevehicleResource);
+            var vehicle = mapper.Map<SaveVehicleResource, Vehicle>(vehicleResource);
             vehicle.LastUpdate = DateTime.Now;
 
             repository.Add(vehicle);
-            await context.SaveChangesAsync();
+            await unitOfWork.CompleteAsync();
 
             vehicle = await repository.GetVehicle(vehicle.Id);
-            /* Para devolver el vehicleResource en lugar del vehicle (o del SaveVehicleResource),  
-               Además, si intento regresar el puro vehicle, obtendré error de
-               cochinero circular.
-            */
+
             var result = mapper.Map<Vehicle, VehicleResource>(vehicle);
 
             return Ok(result);
@@ -86,7 +63,7 @@ namespace vega_backend.Controllers
 
             vehicle.LastUpdate = DateTime.Now;
 
-            await context.SaveChangesAsync();
+            await this.unitOfWork.CompleteAsync();
             // mapeo ahora con VehicleResource (no con SaveVehicleResource) para devolver detalle
             var result = mapper.Map<Vehicle, VehicleResource>(vehicle);
 
@@ -104,7 +81,7 @@ namespace vega_backend.Controllers
             }
 
             repository.Remove(vehicle);
-            await context.SaveChangesAsync();
+            await this.unitOfWork.CompleteAsync();
 
             return Ok(id);
         }

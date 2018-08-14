@@ -34,6 +34,7 @@ namespace vega_backend
            services.AddCors();
            services.AddAutoMapper();
            services.AddScoped<IVehicleRepository, VehicleRepository>();
+           services.AddScoped<IUnitOfWork,UnitOfWork>();
           
             /*
             Esto es para usar las apis con los Models y evitar el error de 
