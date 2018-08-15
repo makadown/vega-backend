@@ -31,11 +31,26 @@ namespace vega_backend
         {
             /* Importante para evitar errores 
                "No 'Access-Control-Allow-Origin' header is present on the requested resource"
-               en el front */
-           services.AddCors();
+               en el front.
+               Guia:
+               https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-2.1
+          */
+           services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    policy =>
+                            {
+                                policy.AllowAnyOrigin()
+                                    .AllowAnyHeader()
+                                    .AllowAnyMethod()
+                                    .AllowCredentials();
+                            });
+            });
+
            services.AddAutoMapper();
            services.AddScoped<IVehicleRepository, VehicleRepository>();
            services.AddScoped<IUnitOfWork,UnitOfWork>();
+           
           
             /*
             Esto es para usar las apis con los Models y evitar el error de 
@@ -66,8 +81,7 @@ https://developer.okta.com/blog/2018/04/26/build-crud-app-aspnetcore-angular#con
                 app.UseHsts();
             } */
 
-            app.UseCors(builder =>
-                builder.WithOrigins("http://localhost:4200").AllowAnyHeader());
+            app.UseCors("CorsPolicy");          
 
             app.UseDefaultFiles();
             app.UseStaticFiles();

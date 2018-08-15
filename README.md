@@ -1,6 +1,12 @@
 # VEGA BACKEND
 
-Basado en el curso de mosh separado en 2 proyectos. 
+Basado en el curso de mosh separado en 2 proyectos:
+
+- https://github.com/makadown/vega
+
+- https://github.com/makadown/vega-backend
+
+
 Este proyecto es en ASPNET CORE 2.1 con visual studio code.
 
 Guia de creación de backend desde cero gracias a https://docs.microsoft.com/en-us/aspnet/core/tutorials/web-api-vsc
@@ -87,7 +93,11 @@ http://localhost:5000/api/makes
 |                   |                         |              |                                            |
 
 
+# Referencias de desarrollo
 
+Importante para evitar errores "No 'Access-Control-Allow-Origin' header is present on the requested resource" en el front.
+               
+> https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-2.1
 
 
 
