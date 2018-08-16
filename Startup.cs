@@ -35,17 +35,7 @@ namespace vega_backend
                Guia:
                https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-2.1
           */
-           services.AddCors(options =>
-            {
-                options.AddPolicy("CorsPolicy",
-                    policy =>
-                            {
-                                policy.AllowAnyOrigin()
-                                    .AllowAnyHeader()
-                                    .AllowAnyMethod()
-                                    .AllowCredentials();
-                            });
-            });
+           services.AddCors();
 
            services.AddAutoMapper();
            services.AddScoped<IVehicleRepository, VehicleRepository>();
@@ -81,7 +71,12 @@ https://developer.okta.com/blog/2018/04/26/build-crud-app-aspnetcore-angular#con
                 app.UseHsts();
             } */
 
-            app.UseCors("CorsPolicy");          
+            app.UseCors( builder =>
+                     builder.AllowAnyOrigin()
+                                    .AllowAnyHeader()
+                                    .AllowAnyMethod()
+                                    .AllowCredentials() 
+                );          
 
             app.UseDefaultFiles();
             app.UseStaticFiles();

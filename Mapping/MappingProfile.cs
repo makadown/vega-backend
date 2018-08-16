@@ -50,7 +50,7 @@ namespace vega_backend.Mapping
                     /* Recorro features que estan en el registro a crear/actualizar del vehiculo (v) 
                        que no estan en el resource (vr) para borrarlos.
                     */
-                    var removedFeatures = v.Features.Where(f=>!vr.Features.Contains(f.FeatureId));
+                    var removedFeatures = v.Features.Where(f=>!vr.Features.Contains(f.FeatureId)).ToList();
                     foreach (var f in removedFeatures ) {
                         v.Features.Remove(f);
                     }
@@ -60,7 +60,7 @@ namespace vega_backend.Mapping
                      registro a crear/actualizar del vehiculo (v) para agregarlos.
                     */
                     var addedFeatures = vr.Features.Where(id => !v.Features.Any( f=> f.FeatureId == id ) )
-                                 .Select(id => new VehicleFeature { FeatureId = id });
+                                 .Select(id => new VehicleFeature { FeatureId = id }).ToList();
 
                     foreach(var f in addedFeatures) {
                         v.Features.Add( f );
