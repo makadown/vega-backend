@@ -36,7 +36,7 @@ namespace vega_backend.Mapping
                                              { Id =vf.Feature.Id, Name = vf.Feature.Name } ) ) );
 
             // From API Resource to Domain
-            CreateMap<FilterResource, Filter>();
+            CreateMap<VehicleQueryResource, VehicleQuery>();
 
             CreateMap<SaveVehicleResource, Vehicle>()
                 .ForMember(v => v.Id, opt => opt.Ignore() )      /* Para evitar error al actualizar */
