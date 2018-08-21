@@ -26,5 +26,12 @@ namespace vega_backend.Extensions
             }
             
         }
+
+        public static IQueryable<T> ApplyPaging<T>(this IQueryable<T> query, IQueryObject queryObj ) 
+        {
+            if ( queryObj.PageSize <= 0 ) { queryObj.PageSize =10; }
+            if ( queryObj.Page <= 0 ) { queryObj.Page =1; }
+           return query.Skip( (queryObj.Page - 1 ) * queryObj.PageSize ).Take(queryObj.PageSize);    
+        }
     }
 }

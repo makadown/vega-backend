@@ -43,6 +43,10 @@ namespace vega_backend.Controllers
             y que el metodo retorne un 
                       Task<IEnumerable<Make>>
              */
+
+             /* NOTA2: Tambien puede funcionar con 1 sola linea usando el ProjectTo
+  return await context.Makes.Include(m => m.Models).ProjectTo<MakeResource>(mapper.ConfigurationProvider).ToListAsync();
+              */
         }
 
     }
