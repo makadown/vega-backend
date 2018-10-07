@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using System;
 using System.IO;
 using System.Linq;
@@ -14,9 +15,8 @@ namespace vega_backend.Controllers
 {
     [Route("/api/vehicles/{vehicleId}/photos")]
     public class PhotosController : Controller
-    {
-        private readonly int MAX_BYTES = 10 * 1024 * 1024;
-        private readonly string[] ACCEPTED_FILE_TYPES = new[] {".jpg", ".jpeg", ".png"};
+    {        
+        private readonly PhotoSettings photoSettings;
         private readonly IMapper mapper;
         private readonly IHostingEnvironment host;
         private readonly IVehicleRepository repository;
@@ -24,8 +24,9 @@ namespace vega_backend.Controllers
 
         public PhotosController(IMapper mapper, 
                                 IHostingEnvironment host, IVehicleRepository repository, 
-                                IUnitOfWork unitOfWork)
+                                IUnitOfWork unitOfWork, IOptionsSnapshot<PhotoSettings> options)
         {
+            this.photoSettings = options.Value;
             this.mapper = mapper;
             this.unitOfWork = unitOfWork;
             this.host = host;
@@ -41,9 +42,9 @@ namespace vega_backend.Controllers
 
             if ( file == null ) return BadRequest("Null file");
             if (file.Length==0) return BadRequest("Empty File");            
-            if (file.Length > MAX_BYTES) return BadRequest("Maximum file size exceeded");            
-            if ( !ACCEPTED_FILE_TYPES.Any(s => s == Path.GetExtension(file.FileName ) )) 
-                  return BadRequest("Invalid File Type" );
+            if (file.Length > photoSettings.MaxBytes) return BadRequest("Maximum file size exceeded");            
+            
+            if ( !photoSettings.IsSupported(file.FileName) ) return BadRequest("Invalid File Type" );
 
              var uploadsFolderPath = Path.Combine(host.WebRootPath,"uploads");
              if (!Directory.Exists(uploadsFolderPath))

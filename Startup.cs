@@ -14,6 +14,7 @@ using Microsoft.Extensions.Options;
 using vega_backend.Persistence;
 using AutoMapper;
 using vega_backend.Core;
+using vega_backend.Core.Models;
 
 namespace vega_backend
 {
@@ -29,6 +30,7 @@ namespace vega_backend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<PhotoSettings>(Configuration.GetSection("PhotoSettings"));
             /* Importante para evitar errores 
                "No 'Access-Control-Allow-Origin' header is present on the requested resource"
                en el front.
