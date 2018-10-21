@@ -41,6 +41,7 @@ namespace vega_backend
 
            services.AddAutoMapper();
            services.AddScoped<IVehicleRepository, VehicleRepository>();
+           services.AddScoped<IPhotoRepository, PhotoRepository>();
            services.AddScoped<IUnitOfWork,UnitOfWork>();
            
           
